@@ -13,7 +13,7 @@ setup(
             "stubgen-pyx = stubgen_pyx.__main__:main",
         ]
     },
-    install_requires=["Cython", "setuptools"],
+    install_requires=["Cython~=3.0.11", "setuptools"],
     description="Generates `.pyi` files from Cython modules in a given package directory.",
     long_description=(Path(__file__).parent / "README.md").read_text(),
     long_description_content_type="text/markdown",

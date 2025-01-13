@@ -10,9 +10,9 @@ from dataclasses import dataclass
 
 from .test2 cimport imported_func, ImportedClass
 
-__cimport_types__ = (
-    ImportedClass
-)
+__cimport_types__ = {
+    ImportedClass,
+}
 
 @dataclass
 class PythonClass:
@@ -39,10 +39,6 @@ cdef class TestClass:
     """
     This is a class for testing stub file generation.
     """
-
-    __annotations__ = {
-        "_test_class_2": "TestClass2"
-    }
 
     a: int
     cdef public TestClass2 _test_class_2

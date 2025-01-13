@@ -6,15 +6,24 @@ from pathlib import Path
 from stubgen_pyx.build import build
 from stubgen_pyx.convert import convert_module
 
+from typing import Any, Callable
 
-def stubgen(package_dir: str) -> str:
+
+def stubgen(
+    package_dir: str,
+    filter: Callable[[Path], bool] = lambda _: True,
+    /,
+    **ext_kwargs: Any,
+) -> None:
     """
     Compiles all `.pyx` files in `package_dir` in place and generates a `.pyi` file for each module.
+
+    `filter` is a function which takes a `Path` object and returns `True` if the module's `.pyi` file should be generated.
+
+    `ext_kwargs` are passed directly to Extensions in `cythonize`.
     """
 
-    modules: list[tuple[object, Path]] = build(package_dir)
+    modules: list[tuple[object, Path]] = build(package_dir, filter, **ext_kwargs)
+
     for module, file in modules:
-        if file.name == "__cinit__.pyx":
-            file.with_suffix(".pyi").write_text(convert_module(module, filter_unused_imports=False))
-        else:
-            file.with_suffix(".pyi").write_text(convert_module(module))
+        file.with_suffix(".pyi").write_text(convert_module(module))
