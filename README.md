@@ -38,3 +38,7 @@ about Cython module members - this leaves the `.pyi` files quite limited.
 - `cimport`-ed modules with types that leak into the stub file (by way of function signatures, for example)
   do not have their imports followed in the stub file. As a workaround, you can set a `__cimport_types__` list
   or tuple of module types that you want exposed to the stub file.
+
+- This is only designed to be a _pretty good_ approximation of Python-public members in a Cython module. It's still
+  very much a work in progress and may produce inaccurate results. If you notice any bugs or have any suggestions, please
+  [open an issue](https://github.com/jon-edward/stubgen-pyx/issues).
